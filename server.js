@@ -2,6 +2,28 @@
 const express = require('express');
 const app = express();
 
+app.get('/assistant/greet', (req, res) => {
+  let name = req.query.name;
+  if (!name){
+    return res.status(404).json({error:"Name parameter is required"})
+  }
+  const currentDay = new Date().getDay();
+  let welcomeMessage = `Hello, ${name}! Welcome to our assistant app!`;
+  let dayMessage="";
+  switch (currentDay) {
+    case 1:
+      dayMessage = "Happy Monday! Start your week with energy!";
+      break;
+    case 5:
+      dayMessage = "It's Friday! The weekend is near!";
+      break;
+    default:
+      dayMessage = "Have a wonderful day!";
+      break;
+  
+}
+  res.status(200).json({welcomeMessage,dayMessage})
+})
 /*
 Task:
 You need to build an API for a virtual assistant that provides customized responses.
